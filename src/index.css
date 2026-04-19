@@ -604,7 +604,74 @@ ul { list-style: none; }
 .btn-subscribe:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
 .btn-go-home { background: white; color: var(--primary-dark); }
 
-/* Confirm box */
+/* Pay box (Google Pay + fallback) */
+.sub-pay-box {
+  background: white;
+  border-radius: 20px;
+  padding: 28px 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+.sub-pay-amount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.sub-pay-amount-label { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.sub-pay-amount-value { font-size: 32px; font-weight: 900; color: var(--primary-dark); }
+.sub-pay-note { color: var(--text-muted); font-size: 13px; text-align: center; }
+.sub-secure-note { font-size: 12px; color: var(--text-muted); }
+
+/* Google Pay section */
+.gpay-section { width: 100%; }
+.gpay-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
+.gpay-button { width: 100%; min-height: 48px; border-radius: 12px; overflow: hidden; }
+.gpay-terms { font-size: 11px; color: var(--text-muted); }
+
+/* Fallback payment section */
+.sub-fallback {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px dashed var(--border);
+  padding-top: 16px;
+}
+.sub-fallback-note { font-size: 13px; color: var(--text-muted); text-align: center; }
+.sub-confirm-methods { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.payment-method {
+  background: #f0f4f0; color: var(--primary-dark); border-radius: 8px;
+  padding: 4px 12px; font-size: 13px; font-weight: 600;
+}
+.sub-confirm-actions { display: flex; flex-direction: column; gap: 10px; }
+.btn-sub-cancel {
+  background: transparent; color: var(--text-muted); border: 2px solid var(--border);
+  border-radius: 10px; padding: 10px; font-size: 15px; cursor: pointer; width: 100%;
+}
+
+/* Error box */
+.sub-error-box {
+  background: #fff3f3;
+  border: 1px solid #ffcdd2;
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.sub-error-icon { font-size: 36px; }
+.sub-error-box p { color: #c62828; font-size: 14px; }
+
+/* Confirm box (kept for reference / fallback) */
 .sub-confirm-box {
   background: white;
   border-radius: 16px;
@@ -615,17 +682,6 @@ ul { list-style: none; }
 .sub-confirm-box h3 { font-size: 20px; font-weight: 800; color: var(--primary-dark); margin-bottom: 12px; }
 .sub-confirm-amount { font-size: 36px; font-weight: 900; color: var(--secondary); margin-bottom: 8px; }
 .sub-confirm-box p { color: var(--text-muted); font-size: 14px; margin-bottom: 12px; }
-.sub-confirm-methods { display: flex; justify-content: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-.payment-method {
-  background: #f0f4f0; color: var(--primary-dark); border-radius: 8px;
-  padding: 4px 12px; font-size: 13px; font-weight: 600;
-}
-.sub-confirm-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
-.btn-sub-cancel {
-  background: transparent; color: var(--text-muted); border: 2px solid var(--border);
-  border-radius: 10px; padding: 10px; font-size: 15px; cursor: pointer;
-}
-.sub-secure-note { font-size: 13px; color: var(--text-muted); }
 
 /* Processing */
 .sub-processing { color: white; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }

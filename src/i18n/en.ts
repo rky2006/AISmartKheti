@@ -235,6 +235,13 @@ const en = {
   paymentSuccessDesc: 'Your subscription is now active until {date}. Happy farming!',
   goToDashboard: 'Go to Dashboard',
   confirmPaymentMethods: 'UPI · Net Banking · Debit Card',
+  // Google Pay
+  gpayNotAvailable: 'Google Pay is not available in your browser. Use another payment method:',
+  netBanking: 'Net Banking',
+  debitCard: 'Debit Card',
+  amountDue: 'Amount Due',
+  paymentError: 'Payment could not be completed. Please try again.',
+  tryAgain: 'Try Again',
 };
 
 export default en;

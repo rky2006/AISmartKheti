@@ -235,6 +235,13 @@ const mr = {
   paymentSuccessDesc: 'तुमची सदस्यता {date} पर्यंत सक्रिय आहे. सुखी शेती!',
   goToDashboard: 'डॅशबोर्डवर जा',
   confirmPaymentMethods: 'UPI · नेट बँकिंग · डेबिट कार्ड',
+  // Google Pay
+  gpayNotAvailable: 'Google Pay तुमच्या ब्राउझरमध्ये उपलब्ध नाही. दुसरी पेमेंट पद्धत वापरा:',
+  netBanking: 'नेट बँकिंग',
+  debitCard: 'डेबिट कार्ड',
+  amountDue: 'देय रक्कम',
+  paymentError: 'पेमेंट पूर्ण होऊ शकले नाही. कृपया पुन्हा प्रयत्न करा.',
+  tryAgain: 'पुन्हा प्रयत्न करा',
 };
 
 export default mr;
