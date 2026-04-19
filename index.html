@@ -2,6 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Restore path redirected via 404.html for GitHub Pages SPA routing.
+      (function () {
+        var query = window.location.search;
+        if (query) {
+          var params = new URLSearchParams(query);
+          var p = params.get('p');
+          var h = params.get('h') || '';
+          if (p !== null) {
+            var path = '/AISmartKheti' + decodeURIComponent(p);
+            window.history.replaceState(null, null, path + decodeURIComponent(h));
+          }
+        }
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/pwa-192x192.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
