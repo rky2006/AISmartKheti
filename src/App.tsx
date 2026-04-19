@@ -1,0 +1,65 @@
+
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { LanguageProvider } from './contexts/LanguageContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import Layout from './components/Layout/Layout';
+import LanguageSelect from './pages/LanguageSelect';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import CropHealthDiagnosis from './pages/CropHealthDiagnosis';
+import SmartFarmingAdvisory from './pages/SmartFarmingAdvisory';
+import MarketPrices from './pages/MarketPrices';
+import KnowledgeBase from './pages/KnowledgeBase';
+import FarmActivityLog from './pages/FarmActivityLog';
+import CropTypeSelection from './pages/CropTypeSelection';
+import FarmingMethod from './pages/FarmingMethod';
+import OrganicFertilizers from './pages/OrganicFertilizers';
+import SoilWaterAnalysis from './pages/SoilWaterAnalysis';
+
+function PrivateRoute({ children }: { children: React.ReactNode }) {
+  const { user } = useAuth();
+  return user ? <>{children}</> : <Navigate to="/login" replace />;
+}
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="/language" replace />} />
+      <Route path="/language" element={<LanguageSelect />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route
+        element={
+          <PrivateRoute>
+            <Layout />
+          </PrivateRoute>
+        }
+      >
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/crop-health" element={<CropHealthDiagnosis />} />
+        <Route path="/advisory" element={<SmartFarmingAdvisory />} />
+        <Route path="/market-prices" element={<MarketPrices />} />
+        <Route path="/knowledge-base" element={<KnowledgeBase />} />
+        <Route path="/activity-log" element={<FarmActivityLog />} />
+        <Route path="/crop-type" element={<CropTypeSelection />} />
+        <Route path="/farming-method" element={<FarmingMethod />} />
+        <Route path="/organic-fertilizers" element={<OrganicFertilizers />} />
+        <Route path="/soil-water-analysis" element={<SoilWaterAnalysis />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/language" replace />} />
+    </Routes>
+  );
+}
+
+export default function App() {
+  return (
+    <LanguageProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </AuthProvider>
+    </LanguageProvider>
+  );
+}
