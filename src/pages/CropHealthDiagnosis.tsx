@@ -81,6 +81,11 @@ export default function CropHealthDiagnosis() {
   const handleImageSelect = (file: File) => {
     if (!file.type.startsWith('image/')) return;
     const url = URL.createObjectURL(file);
+    // createObjectURL always returns a blob: URL; guard before storing
+    if (!url.startsWith('blob:')) {
+      URL.revokeObjectURL(url);
+      return;
+    }
     setImageUrl(url);
     setResult(null);
   };
