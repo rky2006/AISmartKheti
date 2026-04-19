@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useAuth } from '../../contexts/AuthContext';
+import { useSubscription } from '../../hooks/useSubscription';
 
 const navItems = [
   { path: '/dashboard', icon: '🏠', key: 'dashboard' },
@@ -20,6 +21,7 @@ const navItems = [
 export default function Navbar() {
   const { t } = useLanguage();
   const { user, logout } = useAuth();
+  const { isSubscribed, isTrialActive, daysLeftInTrial } = useSubscription();
   const navigate = useNavigate();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -53,7 +55,20 @@ export default function Navbar() {
           </Link>
         ))}
         <div className="navbar-user">
-          <span className="user-name">👤 {user?.fullName}</span>
+          <div className="user-info">
+            <span className="user-name">👤 {user?.fullName}</span>
+            {isSubscribed ? (
+              <span className="sub-badge sub-badge-pro">⭐ PRO</span>
+            ) : isTrialActive ? (
+              <Link to="/subscription" className="sub-badge sub-badge-trial">
+                🕐 {t.trial} {daysLeftInTrial}d
+              </Link>
+            ) : (
+              <Link to="/subscription" className="sub-badge sub-badge-expired">
+                🔒 {t.subscribe}
+              </Link>
+            )}
+          </div>
           <button className="btn btn-outline btn-sm" onClick={handleLogout}>
             {t.logout}
           </button>

@@ -2,10 +2,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { useSubscription } from './hooks/useSubscription';
 import Layout from './components/Layout/Layout';
 import LanguageSelect from './pages/LanguageSelect';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Subscription from './pages/Subscription';
 import Dashboard from './pages/Dashboard';
 import CropHealthDiagnosis from './pages/CropHealthDiagnosis';
 import SmartFarmingAdvisory from './pages/SmartFarmingAdvisory';
@@ -17,9 +19,19 @@ import FarmingMethod from './pages/FarmingMethod';
 import OrganicFertilizers from './pages/OrganicFertilizers';
 import SoilWaterAnalysis from './pages/SoilWaterAnalysis';
 
-function PrivateRoute({ children }: { children: React.ReactNode }) {
+/** Requires the user to be logged in; no subscription check. */
+function AuthRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   return user ? <>{children}</> : <Navigate to="/login" replace />;
+}
+
+/** Requires login AND an active trial or paid subscription. */
+function PrivateRoute({ children }: { children: React.ReactNode }) {
+  const { user } = useAuth();
+  const { hasAccess } = useSubscription();
+  if (!user) return <Navigate to="/login" replace />;
+  if (!hasAccess) return <Navigate to="/subscription" replace />;
+  return <>{children}</>;
 }
 
 function AppRoutes() {
@@ -29,6 +41,11 @@ function AppRoutes() {
       <Route path="/language" element={<LanguageSelect />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      {/* Subscription page: needs auth but NOT active subscription */}
+      <Route
+        path="/subscription"
+        element={<AuthRoute><Subscription /></AuthRoute>}
+      />
       <Route
         element={
           <PrivateRoute>

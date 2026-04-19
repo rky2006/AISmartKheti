@@ -1,18 +1,24 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 
-interface User {
+export interface User {
   id: string;
   fullName: string;
   email: string;
   phoneNumber: string;
   state: string;
+  /** Unix ms timestamp when the account was created (trial start) */
+  registeredAt: number;
+  /** Unix ms timestamp when the current paid subscription expires, if any */
+  subscriptionExpiry?: number;
 }
 
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<boolean>;
-  register: (data: Omit<User, 'id'> & { password: string }) => Promise<boolean>;
+  register: (data: Omit<User, 'id' | 'registeredAt' | 'subscriptionExpiry'> & { password: string }) => Promise<boolean>;
   logout: () => void;
+  /** Activates a 1-year paid subscription for the current user (simulated payment). */
+  subscribe: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -36,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('user', JSON.stringify(userData));
       return true;
     }
-    // Default demo account
+    // Default demo account — always has a fresh registeredAt so trial is always active
     if (email === 'farmer@demo.com' && password === 'demo123') {
       const demoUser: User = {
         id: 'demo-1',
@@ -44,6 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email: 'farmer@demo.com',
         phoneNumber: '9876543210',
         state: 'Maharashtra',
+        registeredAt: Date.now(),
       };
       setUser(demoUser);
       localStorage.setItem('user', JSON.stringify(demoUser));
@@ -52,12 +59,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return false;
   };
 
-  const register = async (data: Omit<User, 'id'> & { password: string }): Promise<boolean> => {
+  const register = async (
+    data: Omit<User, 'id' | 'registeredAt' | 'subscriptionExpiry'> & { password: string }
+  ): Promise<boolean> => {
     const users: (User & { password: string })[] = JSON.parse(
       localStorage.getItem('registeredUsers') || '[]'
     );
     if (users.find(u => u.email === data.email)) return false;
-    const newUser: User & { password: string } = { ...data, id: Date.now().toString() };
+    const newUser: User & { password: string } = {
+      ...data,
+      id: Date.now().toString(),
+      registeredAt: Date.now(),
+    };
     users.push(newUser);
     localStorage.setItem('registeredUsers', JSON.stringify(users));
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -72,7 +85,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('user');
   };
 
-  return <AuthContext.Provider value={{ user, login, register, logout }}>{children}</AuthContext.Provider>;
+  const subscribe = () => {
+    if (!user) return;
+    const expiry = Date.now() + 365 * 24 * 60 * 60 * 1000; // 1 year
+    const updated: User = { ...user, subscriptionExpiry: expiry };
+    setUser(updated);
+    localStorage.setItem('user', JSON.stringify(updated));
+    // Persist into the registered-users list too
+    const users: (User & { password: string })[] = JSON.parse(
+      localStorage.getItem('registeredUsers') || '[]'
+    );
+    const idx = users.findIndex(u => u.id === user.id);
+    if (idx !== -1) {
+      users[idx] = { ...users[idx], subscriptionExpiry: expiry };
+      localStorage.setItem('registeredUsers', JSON.stringify(users));
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, register, logout, subscribe }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

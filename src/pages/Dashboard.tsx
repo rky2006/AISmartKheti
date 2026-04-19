@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
+import { useSubscription } from '../hooks/useSubscription';
 
 const quickActions = [
   { icon: '🔬', key: 'uploadCropPhoto', path: '/crop-health', color: '#e8f5e9' },
@@ -24,9 +25,24 @@ const featureCards = [
 export default function Dashboard() {
   const { t } = useLanguage();
   const { user } = useAuth();
+  const { isTrialActive, isSubscribed, daysLeftInTrial } = useSubscription();
 
   return (
     <div className="page">
+      {/* Trial / subscription banner */}
+      {!isSubscribed && isTrialActive && (
+        <div className={`trial-banner ${daysLeftInTrial <= 7 ? 'trial-banner-warning' : 'trial-banner-info'}`}>
+          <span>
+            {daysLeftInTrial <= 7
+              ? `⚠️ ${t.trialExpiringSoon.replace('{days}', daysLeftInTrial.toString())}`
+              : `🎉 ${t.trialDaysLeft.replace('{days}', daysLeftInTrial.toString())}`}
+          </span>
+          <Link to="/subscription" className="trial-banner-link">
+            {t.subscribeNow} — ₹50/{t.perYear} →
+          </Link>
+        </div>
+      )}
+
       <div className="page-header dashboard-header">
         <div>
           <h1>🌱 {t.welcomeBack}, {user?.fullName || 'Farmer'}!</h1>
