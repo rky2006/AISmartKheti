@@ -7,15 +7,14 @@ import { useSubscription } from '../../hooks/useSubscription';
 
 const navItems = [
   { path: '/dashboard', icon: '🏠', key: 'dashboard' },
+  { path: '/crop-guidance', icon: '🌾', key: 'cropGuidance' },
   { path: '/crop-health', icon: '🔬', key: 'cropHealth' },
-  { path: '/advisory', icon: '🌾', key: 'farmingAdvisory' },
+  { path: '/soil-water-analysis', icon: '🧪', key: 'soilWaterAnalysis' },
+  { path: '/advisory', icon: '💬', key: 'farmingAdvisory' },
+  { path: '/organic-fertilizers', icon: '🌿', key: 'organicFertilizers' },
   { path: '/market-prices', icon: '📊', key: 'marketPrices' },
   { path: '/knowledge-base', icon: '📚', key: 'knowledgeBase' },
   { path: '/activity-log', icon: '📝', key: 'activityLog' },
-  { path: '/crop-type', icon: '🌱', key: 'cropType' },
-  { path: '/farming-method', icon: '🚜', key: 'farmingMethod' },
-  { path: '/organic-fertilizers', icon: '🌿', key: 'organicFertilizers' },
-  { path: '/soil-water-analysis', icon: '🧪', key: 'soilWaterAnalysis' },
 ];
 
 export default function Navbar() {
@@ -56,7 +55,12 @@ export default function Navbar() {
         ))}
         <div className="navbar-user">
           <div className="user-info">
-            <span className="user-name">👤 {user?.fullName}</span>
+            {user?.photoURL ? (
+              <img src={user.photoURL} alt={user.fullName} className="user-avatar" />
+            ) : (
+              <span className="user-name">👤 {user?.fullName}</span>
+            )}
+            {!user?.photoURL && <span className="user-name">{user?.fullName}</span>}
             {isSubscribed ? (
               <span className="sub-badge sub-badge-pro">⭐ PRO</span>
             ) : isTrialActive ? (

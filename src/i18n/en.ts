@@ -21,11 +21,13 @@ const en = {
   loginBtn: 'Login',
   registerBtn: 'Register',
   logout: 'Logout',
+  signInWithGoogle: 'Sign in with Google',
+  googleSignInSubtitle: 'Use your Google account to access AI Smart Kheti',
 
   // Navigation
   dashboard: 'Dashboard',
-  cropHealth: 'Crop Health Diagnosis',
-  farmingAdvisory: 'Smart Farming Advisory',
+  cropHealth: 'AI Crop Doctor',
+  farmingAdvisory: 'Recommendations & Chatbot',
   marketPrices: 'Market Prices',
   knowledgeBase: 'Knowledge Base',
   activityLog: 'Activity Log',
@@ -33,6 +35,7 @@ const en = {
   farmingMethod: 'Farming Method',
   organicFertilizers: 'Organic Fertilizers',
   soilWaterAnalysis: 'Soil & Water Analysis',
+  cropGuidance: 'Crop Guidance',
   profile: 'Profile',
 
   // Dashboard
@@ -163,6 +166,33 @@ const en = {
   benefits: 'Benefits',
   duration: 'Preparation Time',
   quantity: 'Quantity',
+
+  // Crop Guidance
+  cropGuidanceTitle: 'Crop Guidance',
+  cropGuidanceSubtitle: 'Complete guidance from field preparation to post-harvest',
+  fieldPreparation: 'Field Preparation',
+  sowingCare: 'Sowing & Care',
+  harvestPostHarvest: 'Harvest & Post-Harvest',
+
+  // Chatbot / Recommendations
+  chatbotTitle: 'AI Chatbot & Expert Advice',
+  chatbotSubtitle: 'Get instant answers to your farming questions',
+  typeMessage: 'Type your farming question...',
+  sendMessage: 'Send',
+  expertAdvice: 'Expert Advice',
+  aiChatSupport: 'AI Chat Support',
+  cropSolutions: 'Crop Solutions',
+
+  // Freemium / Premium
+  freemiumTitle: 'Freemium Services',
+  premiumTitle: 'Premium Services',
+  basicTips: 'Basic Tips',
+  communityForum: 'Community Forum',
+  weatherUpdates: 'Weather Updates',
+  advancedDiseaseDetection: 'Advanced Disease Detection',
+  detailedReports: 'Detailed Reports',
+  agriMarketplace: 'Agri Marketplace',
+  upgradeNow: 'Upgrade to Premium',
 
   // Soil & Water Analysis
   soilWaterTitle: 'Soil & Water Report Analysis',

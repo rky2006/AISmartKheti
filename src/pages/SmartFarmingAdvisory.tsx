@@ -258,6 +258,13 @@ export default function SmartFarmingAdvisory() {
   const [advisory, setAdvisory] = useState<Advisory | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // Chatbot state
+  const [chatMessages, setChatMessages] = useState<{ role: 'user' | 'bot'; text: string }[]>([
+    { role: 'bot', text: '🌱 Namaste! I am your AI farming assistant. Ask me anything about crop diseases, fertilizers, irrigation, pests, or market prices!' },
+  ]);
+  const [chatInput, setChatInput] = useState('');
+  const [chatLoading, setChatLoading] = useState(false);
+
   const districts = selectedState ? (STATE_DISTRICTS[selectedState] || []) : [];
 
   const cropKey = selectedState && selectedDistrict && selectedDistrict !== 'All Districts'
@@ -294,16 +301,69 @@ export default function SmartFarmingAdvisory() {
     setLoading(false);
   };
 
+  const generateChatResponse = (question: string): string => {
+    const q = question.toLowerCase();
+    if (q.includes('pest') || q.includes('insect') || q.includes('aphid') || q.includes('whitefly')) {
+      return '🐛 For pest control: Use Neem oil 3% spray every 15 days as organic option. For chemical control, Imidacloprid 17.8 SL @ 0.5 ml/litre is effective against sucking pests. Install yellow sticky traps (10/acre) for monitoring. Scout fields twice weekly for early detection.';
+    }
+    if (q.includes('disease') || q.includes('blight') || q.includes('rust') || q.includes('fungal')) {
+      return '🍂 For fungal diseases: Remove infected plant parts immediately. Apply Mancozeb 75% WP @ 2.5 kg/ha. For bacterial diseases, use copper-based sprays. Maintain proper plant spacing for air circulation. Avoid overhead irrigation which spreads diseases.';
+    }
+    if (q.includes('fertilizer') || q.includes('urea') || q.includes('npk') || q.includes('nutrient')) {
+      return '🌿 Fertilizer advice: Apply NPK based on soil test (typical: 120:60:40 kg/ha for cereals). Split nitrogen into 3 doses: basal, tillering, panicle initiation. For organic farming, use Jeevamrut (200L/acre) every 15 days. Avoid applying urea in hot sun — apply in evening or after irrigation.';
+    }
+    if (q.includes('water') || q.includes('irrigat') || q.includes('drip') || q.includes('sprinkler')) {
+      return '💧 Irrigation tips: Drip irrigation saves 40-60% water vs flood. Critical stages: never miss irrigation at flowering and grain filling. Water stress during flowering can reduce yield by 30-40%. Use tensiometers (₹800-1200) for precise irrigation timing. Recommended: Alternate Wetting & Drying (AWD) for rice.';
+    }
+    if (q.includes('soil') || q.includes('ph') || q.includes('compost') || q.includes('organic matter')) {
+      return '🌍 Soil health: Ideal pH 6.0-7.5 for most crops. Apply 5-10 tonnes/ha FYM before each season. Vermicompost is 5x richer in nitrogen than regular compost. Add green manure (Dhaincha) to improve soil organic matter by 0.5-1% per season. Deep plough every 3-5 years.';
+    }
+    if (q.includes('market') || q.includes('price') || q.includes('sell') || q.includes('msp')) {
+      return '📊 Market tips: Check e-NAM portal (enam.gov.in) for best APMC prices. If market price is below MSP, sell through PM-AASHA scheme at government procurement centers. Join Farmer Producer Organizations (FPO) for collective bargaining. Grading and packaging can increase your selling price by 15-25%.';
+    }
+    if (q.includes('wheat') || q.includes('rabi')) {
+      return '🌾 Wheat guidance: Sow October 15 – November 15 with certified seeds @ 100 kg/ha. Apply 120-60-40 NPK. Give 6 irrigations (CRI, Tillering, Jointing, Flowering, Grain Fill, Dough stage). Watch for Yellow Rust — apply Propiconazole if spotted. Harvest at 13-14% moisture.';
+    }
+    if (q.includes('rice') || q.includes('paddy') || q.includes('kharif')) {
+      return '🌾 Rice guidance: Transplant June-July with 25-30 day seedlings. Spacing 20x15 cm. Apply 120-60-60 NPK in split doses. Maintain 5cm standing water for first 3 weeks. Use SRI method for 20-30% higher yield. Watch for Brown Plant Hopper and Blast disease.';
+    }
+    if (q.includes('weather') || q.includes('rain') || q.includes('temperature') || q.includes('frost')) {
+      return '⛅ Weather advisory: Monitor IMD (India Meteorological Department) at mausam.imd.gov.in. For frost protection: apply light irrigation before frost event. Use anti-transpirants like Kaolin 5% spray before heat stress. For heavy rains: ensure drainage channels are clear before monsoon.';
+    }
+    return `🤖 Great question about "${question}"! For detailed advice, I recommend:\n1. Visit your nearest Krishi Vigyan Kendra (KVK) for free expert consultation\n2. Call Kisan Call Center: 1800-180-1551 (free, 24x7)\n3. Use the Expert Advice feature above for crop-specific recommendations\n\nCan I help you with anything else about pest control, fertilizers, irrigation, or market prices?`;
+  };
+
+  const handleChatSend = async () => {
+    if (!chatInput.trim() || chatLoading) return;
+    const userMsg = chatInput.trim();
+    setChatInput('');
+    setChatMessages(prev => [...prev, { role: 'user', text: userMsg }]);
+    setChatLoading(true);
+    await new Promise(r => setTimeout(r, 1000));
+    const response = generateChatResponse(userMsg);
+    setChatMessages(prev => [...prev, { role: 'bot', text: response }]);
+    setChatLoading(false);
+  };
+
+  const handleChatKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleChatSend();
+    }
+  };
+
   return (
     <div className="page">
       <div className="page-header">
-        <h1>🌾 {t.advisoryTitle}</h1>
-        <p>{t.advisorySubtitle}</p>
+        <h1>💬 {t.chatbotTitle}</h1>
+        <p>{t.chatbotSubtitle}</p>
       </div>
 
+      {/* Expert Advisory Section */}
       <div className="content-grid two-col">
         <div className="card">
-          <h3>🗺️ Farm Details</h3>
+          <h3>🗺️ {t.expertAdvice}</h3>
+          <p className="card-subtitle">Get personalized advice based on your location and crop</p>
           <div className="form-group">
             <label>{t.state}</label>
             <select value={selectedState} onChange={e => handleStateChange(e.target.value)}>
@@ -381,6 +441,50 @@ export default function SmartFarmingAdvisory() {
               </div>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* AI Chatbot Section */}
+      <div className="card chatbot-card">
+        <h3>🤖 {t.aiChatSupport}</h3>
+        <p className="card-subtitle">{t.cropSolutions} — ask about pests, diseases, fertilizers, irrigation, or market prices</p>
+        <div className="chat-messages">
+          {chatMessages.map((msg, i) => (
+            <div key={i} className={`chat-message ${msg.role}`}>
+              <span className="chat-avatar">{msg.role === 'bot' ? '🤖' : '👤'}</span>
+              <div className="chat-bubble">
+                {msg.text.split('\n').map((line, j) => (
+                  <p key={j}>{line}</p>
+                ))}
+              </div>
+            </div>
+          ))}
+          {chatLoading && (
+            <div className="chat-message bot">
+              <span className="chat-avatar">🤖</span>
+              <div className="chat-bubble chat-typing">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="chat-input-row">
+          <input
+            className="chat-input"
+            type="text"
+            value={chatInput}
+            onChange={e => setChatInput(e.target.value)}
+            onKeyDown={handleChatKeyDown}
+            placeholder={t.typeMessage}
+            disabled={chatLoading}
+          />
+          <button
+            className="btn btn-primary chat-send-btn"
+            onClick={handleChatSend}
+            disabled={!chatInput.trim() || chatLoading}
+          >
+            {t.sendMessage} ➤
+          </button>
         </div>
       </div>
     </div>

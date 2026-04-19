@@ -21,11 +21,13 @@ const hi = {
   loginBtn: 'लॉगिन करें',
   registerBtn: 'पंजीकरण करें',
   logout: 'लॉगआउट',
+  signInWithGoogle: 'Google से साइन इन करें',
+  googleSignInSubtitle: 'AI स्मार्ट खेती तक पहुंचने के लिए अपने Google खाते का उपयोग करें',
 
   // Navigation
   dashboard: 'डैशबोर्ड',
-  cropHealth: 'फसल स्वास्थ्य निदान',
-  farmingAdvisory: 'स्मार्ट कृषि सलाह',
+  cropHealth: 'AI फसल डॉक्टर',
+  farmingAdvisory: 'सलाह और चैटबॉट',
   marketPrices: 'बाजार भाव',
   knowledgeBase: 'ज्ञान केंद्र',
   activityLog: 'गतिविधि लॉग',
@@ -33,6 +35,7 @@ const hi = {
   farmingMethod: 'खेती की विधि',
   organicFertilizers: 'जैव उर्वरक',
   soilWaterAnalysis: 'मिट्टी और जल विश्लेषण',
+  cropGuidance: 'फसल मार्गदर्शन',
   profile: 'प्रोफ़ाइल',
 
   // Dashboard
@@ -163,6 +166,33 @@ const hi = {
   benefits: 'लाभ',
   duration: 'तैयारी का समय',
   quantity: 'मात्रा',
+
+  // Crop Guidance
+  cropGuidanceTitle: 'फसल मार्गदर्शन',
+  cropGuidanceSubtitle: 'खेत की तैयारी से लेकर कटाई के बाद तक पूर्ण मार्गदर्शन',
+  fieldPreparation: 'खेत की तैयारी',
+  sowingCare: 'बुवाई और देखभाल',
+  harvestPostHarvest: 'कटाई और कटाई के बाद',
+
+  // Chatbot / Recommendations
+  chatbotTitle: 'AI चैटबॉट और विशेषज्ञ सलाह',
+  chatbotSubtitle: 'अपने खेती के सवालों के तुरंत जवाब पाएं',
+  typeMessage: 'अपना खेती का सवाल लिखें...',
+  sendMessage: 'भेजें',
+  expertAdvice: 'विशेषज्ञ सलाह',
+  aiChatSupport: 'AI चैट सहायता',
+  cropSolutions: 'फसल समाधान',
+
+  // Freemium / Premium
+  freemiumTitle: 'निःशुल्क सेवाएं',
+  premiumTitle: 'प्रीमियम सेवाएं',
+  basicTips: 'बुनियादी सुझाव',
+  communityForum: 'सामुदायिक मंच',
+  weatherUpdates: 'मौसम अपडेट',
+  advancedDiseaseDetection: 'उन्नत रोग पहचान',
+  detailedReports: 'विस्तृत रिपोर्ट',
+  agriMarketplace: 'कृषि बाजार',
+  upgradeNow: 'प्रीमियम में अपग्रेड करें',
 
   // Soil & Water Analysis
   soilWaterTitle: 'मिट्टी और जल रिपोर्ट विश्लेषण',

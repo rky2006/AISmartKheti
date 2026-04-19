@@ -6,7 +6,6 @@ import { useSubscription } from './hooks/useSubscription';
 import Layout from './components/Layout/Layout';
 import LanguageSelect from './pages/LanguageSelect';
 import Login from './pages/Login';
-import Register from './pages/Register';
 import Subscription from './pages/Subscription';
 import Dashboard from './pages/Dashboard';
 import CropHealthDiagnosis from './pages/CropHealthDiagnosis';
@@ -18,6 +17,7 @@ import CropTypeSelection from './pages/CropTypeSelection';
 import FarmingMethod from './pages/FarmingMethod';
 import OrganicFertilizers from './pages/OrganicFertilizers';
 import SoilWaterAnalysis from './pages/SoilWaterAnalysis';
+import CropGuidance from './pages/CropGuidance';
 
 /** Requires the user to be logged in; no subscription check. */
 function AuthRoute({ children }: { children: React.ReactNode }) {
@@ -40,7 +40,6 @@ function AppRoutes() {
       <Route path="/" element={<Navigate to="/language" replace />} />
       <Route path="/language" element={<LanguageSelect />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
       {/* Subscription page: needs auth but NOT active subscription */}
       <Route
         path="/subscription"
@@ -54,6 +53,7 @@ function AppRoutes() {
         }
       >
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/crop-guidance" element={<CropGuidance />} />
         <Route path="/crop-health" element={<CropHealthDiagnosis />} />
         <Route path="/advisory" element={<SmartFarmingAdvisory />} />
         <Route path="/market-prices" element={<MarketPrices />} />
