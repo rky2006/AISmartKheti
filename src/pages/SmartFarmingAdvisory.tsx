@@ -17,11 +17,12 @@ const ALL_CROPS = [
   'Soybean', 'Sunflower', 'Groundnut', 'Mustard', 'Sesame (Til)', 'Linseed', 'Castor',
   'Cotton', 'Sugarcane', 'Jute', 'Tobacco',
   'Chickpea (Chana)', 'Pigeon Pea (Tur/Arhar)', 'Green Gram (Moong)', 'Black Gram (Urad)', 'Lentil (Masoor)', 'Cow Pea',
-  'Tomato', 'Onion', 'Potato', 'Brinjal (Eggplant)', 'Okra (Bhendi)', 'Cabbage', 'Cauliflower', 'Bitter Gourd', 'Cucumber', 'Chilli',
-  'Mango', 'Banana', 'Grape', 'Pomegranate', 'Guava', 'Papaya', 'Orange', 'Lemon', 'Sapota', 'Custard Apple',
+  'Tomato', 'Onion', 'Potato', 'Brinjal (Eggplant)', 'Okra (Bhendi)', 'Cabbage', 'Cauliflower', 'Bitter Gourd', 'Cucumber', 'Chilli', 'Vegetables',
+  'Mango', 'Banana', 'Grape', 'Pomegranate', 'Guava', 'Papaya', 'Orange', 'Lemon', 'Sapota', 'Custard Apple', 'Litchi',
   'Turmeric', 'Ginger', 'Cardamom', 'Black Pepper', 'Coriander', 'Cumin (Jeera)', 'Fenugreek (Methi)',
   'Napier Grass', 'Berseem (Egyptian Clover)', 'Lucerne', 'Sudan Grass',
   'Garlic', 'Coconut', 'Arecanut', 'Cashew', 'Tapioca', 'Mulberry', 'Guar', 'Moth Bean',
+  'Tea', 'Coffee', 'Rubber', 'Flowers',
 ];
 
 const STATE_DISTRICTS: Record<string, string[]> = {
