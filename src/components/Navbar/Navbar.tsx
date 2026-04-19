@@ -60,7 +60,6 @@ export default function Navbar() {
             ) : (
               <span className="user-name">👤 {user?.fullName}</span>
             )}
-            {!user?.photoURL && <span className="user-name">{user?.fullName}</span>}
             {isSubscribed ? (
               <span className="sub-badge sub-badge-pro">⭐ PRO</span>
             ) : isTrialActive ? (
