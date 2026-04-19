@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      // Single-page app redirect for GitHub Pages.
+      // Encode the full path as a query parameter and redirect to the root,
+      // where index.html will restore it via the History API.
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        '/AISmartKheti/' +
+        '?p=' + encodeURIComponent(l.pathname.slice('/AISmartKheti/'.length - 1) + l.search) +
+        (l.hash ? '&h=' + encodeURIComponent(l.hash) : '')
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
